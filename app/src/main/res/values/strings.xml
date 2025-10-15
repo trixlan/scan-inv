@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Scan-Inv</string>
+
+    <string name="item_scan">Scan</string>
+    <string name="item_full">Full</string>
+    <string name="item_settings">Settings</string>
+
+    <string name="tv_Titulo">Titulo</string>
+
+    <string name="optionEmail">Continuar con Email</string>
+    <string name="optionGoogle">Continuar con Google</string>
+
+    <string name="txt_login">Login</string>
+    <string name="et_Email">Correo electrónico</string>
+    <string name="et_Password">Contraseña</string>
+    <string name="btn_Ingresar">Ingresar</string>
+    <string name="txt_no_tienes_cuenta">¿No tienes una cuenta?</string>
+    <string name="tv_registrarme">Registrarme</string>
+
+    // Pantalla SCAN
+    <string name="txt_Scan">SCAN</string>
+    <string name="et_EPC">EPC</string>
+    <string name="et_NoInv">No Inventario</string>
+    <string name="btn_Send">Enviar</string>"
+
+    // Pantalla Settings
+    <string name="txt_Settings">Settings</string>
+    <string name="et_Power">Power</string>
+    <string name="et_Frequency">Frequency</string>
+    <string name="et_Protocol">Protocol</string>
+    <string name="et_RF">RF</string>"
+    <string name="btn_Save">Save</string>"
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
