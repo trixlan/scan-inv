@@ -22,13 +22,13 @@
     <string name="et_EPC">EPC</string>
     <string name="et_NoInv">No Inventario</string>
     <string name="btn_Send">Enviar</string>"
+    <string name="btn_Check">Validar</string>"
 
     // Pantalla Settings
     <string name="txt_Settings">Settings</string>
     <string name="et_Power">Power</string>
     <string name="et_Frequency">Frequency</string>
-    <string name="et_Protocol">Protocol</string>
-    <string name="et_RF">RF</string>"
+    <string name="et_Url">URL</string>
     <string name="btn_Save">Save</string>"
 
     <!-- TODO: Remove or change this placeholder text -->

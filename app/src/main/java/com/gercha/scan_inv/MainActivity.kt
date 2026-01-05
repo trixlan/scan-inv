@@ -1,5 +1,6 @@
 package com.gercha.scan_inv
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -17,25 +18,16 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    // Solo se ejecuta una vez cuando se inicia la app
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        firebaseAuth = FirebaseAuth.getInstance()
-//
-//        if (firebaseAuth.currentUser == null) {
-//            irOpcionesLogin()
-//        }
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
-//        Fragmento por defecto
+        // Fragmento por defecto
         verFragmentoScan()
-
+        // Se agregan los iconos debajo de la pantalla para cada funcion
         binding.bottomNV.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.item_scan -> {
@@ -96,14 +88,6 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-//    Codigo para reconocer teclas del dispositivo Android
-//    override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-//        if (event.action == KeyEvent.ACTION_DOWN || event.action == KeyEvent.ACTION_UP) {
-//            Log.d("ScannerBtn", "action=${event.action} keyCode=${event.keyCode} scanCode=${event.scanCode} deviceId=${event.deviceId}")
-//        }
-//        return super.dispatchKeyEvent(event)
-//    }
-
     fun toastMessage(msg: String?) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
@@ -122,16 +106,27 @@ class MainActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
+    // Se ejecuta cada cuando inicia la app y tambien cada que regresas a la app
+    // despues de que se bloqueo la pantalla o despues de una llamada o despues de estar en otra app
     override fun onResume() {
+        val sharedPref = getSharedPreferences("ConfigurationApp", Context.MODE_PRIVATE)
+        val power = sharedPref.getInt("power_rfid", 1);
+        val frequency = sharedPref.getInt("frequency_rfid", 8);
+
         super.onResume()
         val myApp = application as MyApplication
         lifecycleScope.launch {
             toastMessage("Iniciando lector...")
             val start = myApp.resetReader()
             if (start) {
-                toastMessage("Lector reiniciado con éxito")
+                toastMessage(
+                    """
+                    Lector iniciado con éxito 
+                    Power: $power 
+                    Frequency: $frequency
+                    """.trimIndent())
             } else {
-                toastMessage("No se pudo reiniciar el lector")
+                toastMessage("No se pudo iniciar el lector")
             }
         }
     }

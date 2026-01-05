@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Chat - Kotlin"
+rootProject.name = "Scan-Inv"
 include(":app")
