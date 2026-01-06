@@ -26,10 +26,14 @@
 
     // Pantalla Settings
     <string name="txt_Settings">Settings</string>
-    <string name="et_Power">Power</string>
-    <string name="et_Frequency">Frequency</string>
+    <string name="et_Power">Power:</string>
+    <string name="uhf_title_dbm">dBm</string>
+    <string name="et_Frequency">Frequency:</string>
     <string name="et_Url">URL</string>
+    <string name="txt_URL">http://201.96.185.X:3100</string>
     <string name="btn_Save">Save</string>"
+
+    <string name="United_States_Standard">United States Standard(902~928MHz)</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

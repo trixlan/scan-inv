@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -19,8 +20,8 @@ import com.gercha.scan_inv.BuildConfig
 
 class FragmentSettings : Fragment() {
 
-    private lateinit var etPower: EditText
-    private lateinit var etFrequency: EditText
+    private lateinit var spPower: Spinner
+    private lateinit var spFrequency: Spinner
     private lateinit var etUrl: EditText
     private lateinit var btnSave: Button
 
@@ -42,14 +43,13 @@ class FragmentSettings : Fragment() {
         val url = sharedPref.getString("url", "http://201.96.185.X:3100")
 
         // Inflate the layout for this fragment
-        etPower = view.findViewById<EditText>(R.id.et_Power)
-        etFrequency = view.findViewById<EditText>(R.id.et_Frequency)
+        spPower = view.findViewById<Spinner>(R.id.spPower)
+        spFrequency = view.findViewById<Spinner>(R.id.SpinnerFrequency)
         etUrl = view.findViewById<EditText>(R.id.et_Url)
         btnSave = view.findViewById<Button>(R.id.btn_Save)
 
         Log.i("ScannerBtn", "Settings Power: $power Frequency: $frequency")
-        etPower.setText(power.toString())
-        etFrequency.setText(frequency.toString())
+        spPower.setSelection(power - 1)
         etUrl.setText(url.toString())
 
         // Agregamos la version y el versionCode
@@ -73,12 +73,12 @@ class FragmentSettings : Fragment() {
         val myApp = requireActivity().application as MyApplication
 
         // 2. Usamos nuestro nuevo 'applicationScope' que es un CoroutineScope personalizado.
-        val powerText = etPower.text.toString().trim()
-        val frequencyText = etFrequency.text.toString().trim()
+        val powerText = spPower.selectedItem.toString().trim()
+        val frequencyText = "8"
         val urlText = etUrl.text.toString().trim()
 
-        val powerInt: Int = powerText.toIntOrNull() ?: 0
-        val frequencyInt: Int = frequencyText.toIntOrNull() ?: 0
+        val powerInt: Int = powerText.toIntOrNull() ?: 1
+        val frequencyInt: Int = frequencyText.toIntOrNull() ?: 8
         val url: String = urlText
 
         lifecycleScope.launch {
