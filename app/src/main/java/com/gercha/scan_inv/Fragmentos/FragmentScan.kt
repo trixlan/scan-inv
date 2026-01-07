@@ -64,8 +64,6 @@ class FragmentScan : Fragment(R.layout.fragment_scan), KeyEventListener {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        var success = false
-
         when (keyCode) {
             293 -> {
                 val myApp = requireActivity().application as MyApplication
@@ -91,7 +89,7 @@ class FragmentScan : Fragment(R.layout.fragment_scan), KeyEventListener {
                 Log.d("ScannerBtn", "keyCode=$keyCode scan=${event.scanCode}")
             }
         }
-        return success
+        return false
     }
 
     private fun sendRFID() {

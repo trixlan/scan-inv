@@ -2,9 +2,14 @@ package com.gercha.scan_inv
 
 import android.app.Application
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
+import com.gercha.scan_inv.Fragmentos.OnTagReadListener
 import com.rscja.deviceapi.RFIDWithUHFUART
 import com.rscja.deviceapi.entity.UHFTAGInfo
+import com.rscja.deviceapi.interfaces.IUHFInventoryCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -15,6 +20,9 @@ import kotlinx.coroutines.withContext
 // al ser MyApplication una instancia de Application se ejecutara desde el principio de la app
 // para inicializar el lector RFID
 class MyApplication : Application() {
+
+    // Variable para guardar el fragmento que esté escuchando
+    var tagReadListener: OnTagReadListener? = null
 
     // 1. Creamos un CoroutineScope personalizado para toda la aplicación.
     // SupervisorJob() asegura que si una tarea falla, no cancelará todo el scope.
@@ -72,15 +80,42 @@ class MyApplication : Application() {
         return uhfTagInfo
     }
 
-    suspend fun leerVariasEtiquetas(): UHFTAGInfo? {
-        val uhfTagInfo = withContext(Dispatchers.IO) {
-            mReader?.readTagFromBuffer()
+    suspend fun leerVariasEtiquetas() {
+        Log.i("ScannerBtn", "Iniciando Scaneo Continuo...")
+        mReader?.setInventoryCallback(IUHFInventoryCallback { uhftagInfo ->
+            val msg = handler.obtainMessage()
+            msg.obj = uhftagInfo
+            msg.what = 1
+            // Envia el mensaje a nuestro handler.
+            handler.sendMessage(msg)
+        })
+        // 2. ¡ARRANCAR EL HARDWARE!
+        val success = mReader?.startInventoryTag() ?: false
+        if (success) {
+            Log.i("ScannerBtn", "Lector encendido correctamente")
+        } else {
+            Log.e("ScannerBtn", "Error al encender el hardware del lector")
         }
-        // Si la lectura falló (devolvió null), llamamos a nuestra nueva función de reseteo.
-        if (uhfTagInfo == null) {
-            Log.w("SccannerBtn", "Lectura fallida.")
+    }
+
+    fun detenerLectura() {
+        mReader?.stopInventory()
+        Log.i("ScannerBtn", "Lectura detenida")
+    }
+
+    // Se inicializa apuntando al MainLooper para evitar el 'deprecated'
+    val handler = Handler(Looper.getMainLooper()) { msg ->
+        when (msg.what) {
+            1 -> {
+                val info = msg.obj as UHFTAGInfo
+                val epc = info.epc
+
+                // ¡Aquí está el truco! Le avisamos al que esté escuchando
+                tagReadListener?.onTagRead(epc)
+                Log.i("ScannerBtn", "MyApplication recibió: $epc")
+            }
         }
-        return uhfTagInfo
+        true // Indica que el mensaje fue manejado
     }
 
     suspend fun resetReader(): Boolean {

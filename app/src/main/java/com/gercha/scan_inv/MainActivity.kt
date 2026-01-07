@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var layoutBloqueo: View
 
     // Solo se ejecuta una vez cuando se inicia la app
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         //enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        layoutBloqueo = findViewById(R.id.layout_bloqueo)
 
         // Fragmento por defecto
         verFragmentoScan()
@@ -53,6 +56,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun bloquearPantalla() {
+        layoutBloqueo.visibility = View.VISIBLE
+    }
+
+    fun desbloquearPantalla() {
+        layoutBloqueo.visibility = View.GONE
     }
 
     private fun irOpcionesLogin() {

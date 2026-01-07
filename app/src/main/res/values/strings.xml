@@ -24,6 +24,11 @@
     <string name="btn_Send">Enviar</string>"
     <string name="btn_Check">Validar</string>"
 
+    // Pantalla FULL
+    <string name="txt_Full">FULL</string>
+    <string name="btn_Get">Consultar</string>"
+    <string name="btn_Clean">Limpiar</string>"
+
     // Pantalla Settings
     <string name="txt_Settings">Settings</string>
     <string name="et_Power">Power:</string>
