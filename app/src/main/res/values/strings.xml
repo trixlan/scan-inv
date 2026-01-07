@@ -18,14 +18,14 @@
     <string name="tv_registrarme">Registrarme</string>
 
     // Pantalla SCAN
-    <string name="txt_Scan">SCAN</string>
+    <string name="txt_Scan">Scan</string>
     <string name="et_EPC">EPC</string>
     <string name="et_NoInv">No Inventario</string>
     <string name="btn_Send">Enviar</string>"
     <string name="btn_Check">Validar</string>"
 
     // Pantalla FULL
-    <string name="txt_Full">FULL</string>
+    <string name="txt_Full">Full</string>
     <string name="btn_Get">Consultar</string>"
     <string name="btn_Clean">Limpiar</string>"
 

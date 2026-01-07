@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun verFragmentoScan() {
-        binding.tvTitulo.text = "Scan"
 
         val fragment = FragmentScan()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -81,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun verFragmentoFull() {
-        binding.tvTitulo.text = "Full"
 
         val fragment = FragmentFull()
         val fragmentTransaction = supportFragmentManager.beginTransaction()
@@ -91,7 +89,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun verFragmentoSettings() {
-        binding.tvTitulo.text = "Settings"
 
         val fragment = FragmentSettings()
         val fragmentTransaction = supportFragmentManager.beginTransaction()

@@ -8,31 +8,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/toobarRL"
-        android:layout_width="match_parent"
-        android:layout_height="55dp">
-
-        <TextView
-            android:id="@+id/tv_Titulo"
-            android:text="@string/tv_Titulo"
-            android:textStyle="bold"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <View
-            android:layout_alignParentBottom="true"
-            android:background="#ccc"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-
-    </RelativeLayout>
-
     <FrameLayout
         android:id="@+id/fragmentoFL"
         android:layout_above="@+id/view"
-        android:layout_below="@+id/toobarRL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     
