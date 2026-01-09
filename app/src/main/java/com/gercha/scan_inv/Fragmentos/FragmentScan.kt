@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.gercha.scan_inv.MyApplication
 import com.gercha.scan_inv.R
+import com.gercha.scan_inv.interfaces.KeyEventListener
 import com.rscja.deviceapi.entity.UHFTAGInfo
 import kotlinx.coroutines.launch
 import java.net.HttpURLConnection

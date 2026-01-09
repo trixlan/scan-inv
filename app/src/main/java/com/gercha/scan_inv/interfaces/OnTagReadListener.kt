@@ -1,4 +1,4 @@
-package com.gercha.scan_inv.Fragmentos
+package com.gercha.scan_inv.interfaces
 
 interface OnTagReadListener {
     fun onTagRead(epc: String)

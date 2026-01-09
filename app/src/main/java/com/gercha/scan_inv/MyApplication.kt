@@ -2,11 +2,12 @@ package com.gercha.scan_inv
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
-import android.os.Message
 import android.util.Log
-import com.gercha.scan_inv.Fragmentos.OnTagReadListener
+import com.gercha.scan_inv.interfaces.OnTagReadListener
+import com.gercha.scan_inv.services.BienesApiService
 import com.rscja.deviceapi.RFIDWithUHFUART
 import com.rscja.deviceapi.entity.UHFTAGInfo
 import com.rscja.deviceapi.interfaces.IUHFInventoryCallback
@@ -15,6 +16,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 // La clase Application es la madre de todos los componentes de Android
 // al ser MyApplication una instancia de Application se ejecutara desde el principio de la app
@@ -32,11 +35,34 @@ class MyApplication : Application() {
     var mReader: RFIDWithUHFUART? = null
         private set // 'private set' evita que se pueda modificar desde fuera.
 
+    private lateinit var sharedPref: SharedPreferences
+    private var url: String? = "";
+
+    var service: BienesApiService? = null
+        private set
+
     override fun onCreate() {
         super.onCreate()
-        Log.d("ScannerBtn", "¡La clase MyApplication se ha iniciado correctamente!")
+        sharedPref = getSharedPreferences("ConfigurationApp", Context.MODE_PRIVATE)
+        url = sharedPref.getString("url", "http://201.96.185.X:3100")
+        actualizarRetrofit(url ?: "")
         // Inicializamos el lector aquí, una única vez en la vida de la app.
         initUHF()
+    }
+
+    // Esta función la llamarás cada vez que guardes una nueva URL
+    fun actualizarRetrofit(nuevaUrl: String) {
+        try {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(if (nuevaUrl.endsWith("/")) nuevaUrl else "$nuevaUrl/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            service = retrofit.create(BienesApiService::class.java)
+            Log.i("ScannerBtn", "Retrofit actualizado a: $nuevaUrl")
+        } catch (e: Exception) {
+            Log.e("ScannerBtn", "Error al crear Retrofit: ${e.message}")
+        }
     }
 
     var isReaderStuck = false
@@ -154,11 +180,11 @@ class MyApplication : Application() {
         // Guardamos los parametros de forma permanente
         val sharedPref = getSharedPreferences("ConfigurationApp", Context.MODE_PRIVATE)
         val editor = sharedPref.edit()
-
         editor.putInt("power_rfid", power)
         editor.putInt("frequency_rfid", frequency)
         editor.putString("url", url)
         editor.apply() // Guarda de forma asíncrona
+        // Refrescamos el servicio con la nueva URL
+        actualizarRetrofit(url)
     }
-
 }

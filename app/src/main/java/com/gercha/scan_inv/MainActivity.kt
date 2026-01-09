@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.gercha.scan_inv.Fragmentos.FragmentSettings
 import com.gercha.scan_inv.Fragmentos.FragmentScan
 import com.gercha.scan_inv.Fragmentos.FragmentFull
-import com.gercha.scan_inv.Fragmentos.KeyEventListener
+import com.gercha.scan_inv.interfaces.KeyEventListener
 import com.gercha.scan_inv.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 

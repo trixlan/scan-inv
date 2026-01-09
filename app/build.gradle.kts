@@ -13,7 +13,7 @@ android {
         applicationId = "com.gercha.scan_inv"
         minSdk = 24
         targetSdk = 35
-        versionCode = 5
+        versionCode = 6
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -51,6 +51,9 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.ui.desktop)
+    implementation(libs.retrofit.main)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp.logging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
